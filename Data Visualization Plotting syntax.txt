@@ -1,0 +1,50 @@
+data visualization:
+
+Univariate Analysis Visulization:
+Univariate plots:
+Line Chart :
+pokemon['HP'].value_counts().sort_index().plot.line()
+Area Chart:
+pokemon['Total'].value_counts().sort_index().plot.area()
+Histogram
+ pokemon['Total'].plot.hist()
+ Scatter:
+  pokemon.plot.scatter(x='Attack', y='Defense')
+
+  Bivariate Plots
+  Hexplot:
+   pokemon.plot.hexbin(x='Attack', y='Defense', gridsize=25)
+
+       pokemon_stats_legendary = pokemon.groupby(['Legendary', 'Generation']).mean()[['Attack', 'Defense']]
+    pokemon_stats_legendary.plot.bar(stacked=True)
+	
+Stacked Chart:
+    pokemon_stats_legendary = pokemon.groupby(['Legendary', 'Generation']).mean()[['Attack', 'Defense']]
+    pokemon_stats_legendary.plot.bar(stacked=True)
+	
+pokemon_stats_by_generation = pokemon.groupby('Generation').mean()[['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']]
+    pokemon_stats_by_generation.plot.line()
+	
+pair plot
+    sns.pairplot(pokemon.drop("Name", axis=1), hue="Legendary",palette="viridis", size=2)
+	
+	
+multivariate Plotting:
+Scatter Plot
+ sns.lmplot(x='Attack', y='Defense', hue='Legendary', markers=['x', 'o'],fit_reg=False, data=pokemon)
+ 
+ Box plot:
+ sns.boxplot(x="Generation", y="Total", hue='Legendary', data=pokemon)
+
+ Heat map:
+  sns.heatmap(pokemon.loc[:, ['HP', 'Attack', 'Sp. Atk', 'Defense', 'Sp. Def', 'Speed']].corr(),annot=True)
+  
+  Parallal Coordinates:
+  p = (pokemon[(pokemon['Type 1'].isin(["Psychic", "Fighting"]))]
+         .loc[:, ['Type 1', 'Attack', 'Sp. Atk', 'Defense', 'Sp. Def']]
+    )
+    parallel_coordinates(p, 'Type 1')
+	
+	Swarm Plot:
+	    sns.swarmplot(x="Generation", y="Defense", hue="Legendary", palette="gnuplot", data=pokemon)
+		
